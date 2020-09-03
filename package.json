@@ -1,0 +1,34 @@
+{
+  "name": "rasool-sms",
+  "version": "1.0.0",
+  "description": "Send SMS via Rasool SMS API based on events and rules",
+  "main": "dist/index.js",
+  "scripts": {
+    "prepublish": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahmednaser94/rasool-sms.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ahmednaser94/rasool-sms/issues"
+  },
+  "homepage": "https://github.com/ahmednaser94/rasool-sms#readme",
+  "keywords": [
+    "SMS",
+    "Rasool"
+  ],
+  "author": "Ahmed Nasser <ahmed@ahmednaser.me> (@ahmednaser94)",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/boom": "^9.1.0",
+    "@hapi/wreck": "^17.0.0",
+    "@types/node": "^14.6.2",
+    "typescript": "^4.0.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.12",
+    "jest": "^26.4.2",
+    "ts-jest": "^26.3.0"
+  }
+}
