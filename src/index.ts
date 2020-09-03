@@ -1,6 +1,7 @@
 import client from '@hapi/wreck'
 import { Boom } from '@hapi/boom'
 import { URL } from 'url'
+import { isValidPhoneNumber, validaFromField } from './validation'
 
 export interface sendOptions {
   from?: string
@@ -33,6 +34,10 @@ export default class RasoolSMS {
      */
 
     if (this.options.from) {
+      if (!validaFromField(this.options.from)) {
+        throw new Error('"From" field is not valid!')
+      }
+
       this.uri.searchParams.append('sid', this.options.from)
     }
   }
@@ -47,6 +52,18 @@ export default class RasoolSMS {
    */
   send (options: sendOptions) {
     return new Promise((resolve, reject) => {
+
+      if (!isValidPhoneNumber(options.to)) {
+        reject(
+        new Boom('"To" field is not valid', {
+          statusCode: 400,
+          data: '"To" field is not valid',
+          message: '"To" field is not valid'
+        })
+      )
+      }
+
+
       this.uri.searchParams.append('msg', options.body)
       this.uri.searchParams.append('msisdn', options.to)
 
@@ -62,6 +79,16 @@ export default class RasoolSMS {
 
       // if there is already from
       if (options.from) {
+        if (!validaFromField(options.from)) {
+          reject(
+          new Boom('"From" field is not valid', {
+            statusCode: 400,
+            data: '"From" field is not valid',
+            message: '"From" field is not valid'
+          })
+        )
+        }
+
         this.uri.searchParams.append('sid', options.from)
       }
 

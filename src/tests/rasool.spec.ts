@@ -7,59 +7,77 @@ const RasoolSMSCorrectCredentials = new RasoolSMS({
   password: '93142567'
 })
 
+test('success message sending', done => {
+  RasoolSMSCorrectCredentials.send({
+    from: 'Rasool',
+    to: '+201060606024',
+    body: 'this is for correct test'
+  }).then((result: any) => {
+    expect(result).toMatchObject({
+      statusCode: 200,
+      message: 'SMS Sent Succsessfully',
+      response: 3621541
+    })
+    done()
+  })
+})
+
+test('fail becuase from field is not valid', done => {
+  RasoolSMSCorrectCredentials.send({
+    from: 'Rasoolllllll',
+    to: '+201060606024',
+    body: 'this is for test fail'
+  }).catch((err: Boom) => {
+    expect(err.message).toBe('"From" field is not valid')
+    expect(err.output.statusCode).toBe(400)
+    done()
+  })
+})
+
 // false credentials
 const RasoolSMSFalseCredentials = new RasoolSMS({
   username: 'wrongUsername',
-  password: '936214527',
-  from: '010624'
+  password: '936214527'
+  
 })
-
-// missing from in constructor and in send methods
-const RasoolSMSWithoutFrom = new RasoolSMS({
-  username: 'wrongUsername',
-  password: '39124573'
-})
-
-test('success message sending', done => {
-  RasoolSMSCorrectCredentials
-    .send({
-      from: 'Rasool',
-      to: '+201060606024',
-      body: 'this is for test unit'
-    })
-    .then((result: any) => {
-      expect(result).toMatchObject({
-        statusCode: 200,
-        message: 'SMS Sent Succsessfully',
-        response: 3621541
-      })
-      done()
-    })
-})
-
 
 test('failed message sending becuase username is wrong without from field(Sender ID)', done => {
-  RasoolSMSFalseCredentials
-    .send({
-      to: '+201060606024',
-      body: 'this is for test unit'
-    })
-    .catch((err: Boom) => {
-      expect(err.message).toBe('Sorry, wrong username or password')
-      expect(err.output.statusCode).toBe(401)
-      done()
-    })
+  RasoolSMSFalseCredentials.send({
+    from: 'Rasool',
+    to: '+201060606024',
+    body: 'this is for test fail'
+  }).catch((err: Boom) => {
+    expect(err.message).toBe('Sorry, wrong username or password')
+    expect(err.output.statusCode).toBe(401)
+    done()
+  })
+})
+
+test('fail becuase field(Sender ID) is not valid', done => {
+  RasoolSMSFalseCredentials.send({
+    from: 'Rasoolaaaaaaaaaaaaaaaa',
+    to: '+201060606024',
+    body: 'this is for test fail'
+  }).catch((err: Boom) => {
+    expect(err.message).toBe('"From" field is not valid')
+    expect(err.output.statusCode).toBe(400)
+    done()
+  })
 })
 
 test('fail becuase no from field (Sender ID) inside the class or in send function', done => {
-  RasoolSMSWithoutFrom
-    .send({
-      to: '+201060606024',
-      body: 'this is for test unit'
-    })
-    .catch((err: Boom) => {
-      expect(err.message).toBe('"From" field is required')
-      expect(err.output.statusCode).toBe(400)
-      done()
-    })
+  // missing from in constructor and in send methods
+  const RasoolSMSWithoutFrom = new RasoolSMS({
+    username: 'wrongUsername',
+    password: '39124573'
+  })
+
+  RasoolSMSWithoutFrom.send({
+    to: '+201060606024',
+    body: 'this is for test fail'
+  }).catch((err: Boom) => {
+    expect(err.message).toBe('"From" field is required')
+    expect(err.output.statusCode).toBe(400)
+    done()
+  })
 })

@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const wreck_1 = __importDefault(require("@hapi/wreck"));
 const boom_1 = require("@hapi/boom");
 const url_1 = require("url");
+const validation_1 = require("./validation");
 class RasoolSMS {
     /**
      * configure class options
@@ -23,6 +24,9 @@ class RasoolSMS {
          * if provider provided the fixed Sender ID in constructing the class, it is added to the parameters
          */
         if (this.options.from) {
+            if (!validation_1.validaFromField(this.options.from)) {
+                throw new Error('"From" field is not valid!');
+            }
             this.uri.searchParams.append('sid', this.options.from);
         }
     }
@@ -36,6 +40,13 @@ class RasoolSMS {
      */
     send(options) {
         return new Promise((resolve, reject) => {
+            if (!validation_1.isValidPhoneNumber(options.to)) {
+                reject(new boom_1.Boom('"To" field is not valid', {
+                    statusCode: 400,
+                    data: '"To" field is not valid',
+                    message: '"To" field is not valid'
+                }));
+            }
             this.uri.searchParams.append('msg', options.body);
             this.uri.searchParams.append('msisdn', options.to);
             if (!this.options.from && !options.from) {
@@ -47,6 +58,13 @@ class RasoolSMS {
             }
             // if there is already from
             if (options.from) {
+                if (!validation_1.validaFromField(options.from)) {
+                    reject(new boom_1.Boom('"From" field is not valid', {
+                        statusCode: 400,
+                        data: '"From" field is not valid',
+                        message: '"From" field is not valid'
+                    }));
+                }
                 this.uri.searchParams.append('sid', options.from);
             }
             wreck_1.default
