@@ -42,11 +42,11 @@ const RasoolSMS = require("rasool-sms-api");
 
 ##### Method Options
 
-|       Parameter Name        |   Type   |     Example     |
-| :-------------------------: | :------: | :-------------: |
-| options.from **`Optional`** | `String` |  `<SENDER_ID>`  |
-|         options.to          | `String` | `<RECEIVER_ID>` |
-|        options.body         | `String` |  `<SMS_BODY>`   |
+|       Parameter Name        |   Type   |     Example      |
+| :-------------------------: | :------: | :--------------: |
+| options.from **`Optional`** | `String` |  `<SENDER_ID>`   |
+|         options.to          | `String` | `<PHONE_NUMBER>` |
+|        options.body         | `String` |   `<SMS_BODY>`   |
 
 #### **`Sender ID`**
 
