@@ -7,13 +7,13 @@
 #### Typescript
 
 ```javascript
- import RasoolSMS from "rasool-sms";
+ import RasoolSMS from "rasool-sms-api";
 ```
 
 #### Javascript
 
 ```javascript
-const RasoolSMS = require("rasool-sms");
+const RasoolSMS = require("rasool-sms-api");
 ```
 
 ### Create new instance of RasoolSMS
