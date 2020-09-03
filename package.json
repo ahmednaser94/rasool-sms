@@ -1,5 +1,5 @@
 {
-  "name": "rasool-sms",
+  "name": "rasool-sms-api",
   "version": "1.0.0",
   "description": "Send SMS via Rasool SMS API based on events and rules",
   "main": "dist/index.js",
