@@ -2,6 +2,12 @@
 
 ***
 
+## Install
+
+```bash
+npm i rasool-sms-api
+```
+
 ## Usage
 
 #### Typescript
