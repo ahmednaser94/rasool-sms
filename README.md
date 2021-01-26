@@ -1,25 +1,41 @@
 # Rasool SMS
 
+Rasool SMS integration module uses `HTTP` to communicate with service providers.
+
 ***
-
-## Install
-
-```bash
-npm i rasool-sms-api
-```
 
 ## Usage
 
 #### Typescript
 
 ```javascript
- import RasoolSMS from "rasool-sms-api";
+// current is the latest version
+ import { current as RasoolSMS } as from "@bawq/opr-act-sms-rasool";
+
+//  or you can load all versions like this example
+ import * as RasoolSMS from "@bawq/opr-act-sms-rasool";
 ```
 
 #### Javascript
 
 ```javascript
-const RasoolSMS = require("rasool-sms-api");
+// current is the latest version
+const { current } = require("@bawq/opr-act-sms-rasool");
+
+//  or you can load all versions like this example
+const RasoolSMS = require("@bawq/opr-act-sms-rasool");
+```
+
+### `Versioning`
+
+* This package is desined to have all previous versions with the most updated version
+
+* it will be object with many versions and the most updated version will be named `current`
+
+* suppose that we have 3 versions of this package v1, v2, v3 the current will be v3
+
+```javascript
+const SMSRasool = { current, v1, v2, v3 } // current is v3 in this case
 ```
 
 ### Create new instance of RasoolSMS
@@ -38,7 +54,7 @@ const RasoolSMS = require("rasool-sms-api");
  const rasool = new RasoolSMS({
    username: '<USERNAME>',
    password: '<PASSWORD>',
-   from: 'Rasool'
+   from: 'BAWQ'
  })
 ```
 
@@ -48,11 +64,11 @@ const RasoolSMS = require("rasool-sms-api");
 
 ##### Method Options
 
-|       Parameter Name        |   Type   |     Example      |
-| :-------------------------: | :------: | :--------------: |
-| options.from **`Optional`** | `String` |  `<SENDER_ID>`   |
-|         options.to          | `String` | `<PHONE_NUMBER>` |
-|        options.body         | `String` |   `<SMS_BODY>`   |
+|       Parameter Name        |   Type   |     Example     |
+| :-------------------------: | :------: | :-------------: |
+| options.from **`Optional`** | `String` |  `<SENDER_ID>`  |
+|         options.to          | `String` | `<RECEIVER_ID>` |
+|        options.body         | `String` |  `<SMS_BODY>`   |
 
 #### **`Sender ID`**
 
@@ -60,15 +76,15 @@ const RasoolSMS = require("rasool-sms-api");
   * **Phone Number**
     * **Long number** (15 digits without + sign) `+236259124581324`
     * **Short number** like hotline number `19364`
-  * **Alphanumeric** max 11 characters `Rasool`
+  * **Alphanumeric** max 11 characters `BAWQ`
 
 #### Send Example
 
 ```javascript
   rasool.send({
-    from: 'Rasool',
+    from: 'BAWQ',
     to: '+XXXXXXXXXXX',
-    body: 'this is a test message from rasool'
+    body: 'this is a test message from bawq'
   }).then((result) => {
     //  implement logic here
   }).catch((error) => {
